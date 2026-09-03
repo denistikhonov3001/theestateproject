@@ -3,7 +3,20 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Estate Project — A Vision for the Future</title>
-<meta name="description" content="The Estate Project — a long-term vision bringing together nature, history, culture and the sea."><meta name="theme-color" content="#08090b"><meta property="og:title" content="The Estate Project — A Vision for the Future"><meta property="og:description" content="A long-term vision bringing together nature, history, culture and the sea."><meta property="og:type" content="website"><meta property="og:url" content="https://theestateproject.com/"><link rel="canonical" href="https://theestateproject.com/">
+<meta name="description" content="The Estate Project — a personal long-term vision bringing together nature, history, culture and the sea.">
+<meta name="theme-color" content="#08090b">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:title" content="The Estate Project — A Vision for the Future">
+<meta property="og:description" content="A personal long-term vision bringing together nature, history, culture and the sea.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://theestateproject.com/">
+<meta property="og:site_name" content="The Estate Project">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Estate Project — A Vision for the Future">
+<meta name="twitter:description" content="A personal long-term vision bringing together nature, history, culture and the sea.">
+<link rel="canonical" href="https://theestateproject.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308090b'/%3E%3Cpath d='M18 46V18h7l7 12 7-12h7v28h-7V30l-7 12-7-12v16z' fill='%23d7c59d'/%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"The Estate Project","url":"https://theestateproject.com/","description":"A personal long-term vision bringing together nature, history, culture and the sea."}</script>
 <style>
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#08090b;color:#f4f1ea;font-family:Inter,Arial,sans-serif;line-height:1.65}a{text-decoration:none;color:inherit}
 .hero{min-height:100svh;position:relative;display:flex;align-items:flex-end;overflow:hidden;background-image:linear-gradient(90deg,rgba(5,6,7,.78) 0%,rgba(5,6,7,.42) 48%,rgba(5,6,7,.16) 100%),linear-gradient(180deg,rgba(0,0,0,.06) 35%,rgba(0,0,0,.86) 100%),url('https://images.unsplash.com/photo-1753811605759-c435f07c489f?auto=format&fit=crop&w=2400&q=88');background-size:cover;background-position:center}
@@ -57,7 +70,7 @@ function setLang(lang){
  });
  document.querySelectorAll('[data-ph-en]').forEach(el=>{
   const base=el.dataset['ph-en'];
-  const placeholders={de:{'Your name':'Ihr Name','Your email':'Ihre E-Mail','Your message':'Ihre Nachricht'},fr:{'Your name':'Votre nom','Your email':'Votre e-mail','Your message':'Votre message'},es:{'Your name':'Tu nombre','Your email':'Tu correo','Your message':'Tu mensaje'},it:{'Your name':'Il tuo nome','Your email':'La tua email','Your message':'Il tuo messaggio'},pl:{'Your name':'Imię','Your email':'E-mail','Your message':'Wiadomość'},pt:{'Your name':'Seu nome','Your email':'Seu e-mail','Your message':'Sua mensagem'},ru:{'Your name':'Ваше имя','Your email':'Ваш email','Your message':'Ваше сообщение'}};
+  const placeholders={zh:{'Your name':'你的姓名','Your email':'你的邮箱','Your message':'你的留言'},de:{'Your name':'Ihr Name','Your email':'Ihre E-Mail','Your message':'Ihre Nachricht'},fr:{'Your name':'Votre nom','Your email':'Votre e-mail','Your message':'Votre message'},es:{'Your name':'Tu nombre','Your email':'Tu correo','Your message':'Tu mensaje'},it:{'Your name':'Il tuo nome','Your email':'La tua email','Your message':'Il tuo messaggio'},pl:{'Your name':'Imię','Your email':'E-mail','Your message':'Wiadomość'},pt:{'Your name':'Seu nome','Your email':'Seu e-mail','Your message':'Sua mensagem'},ru:{'Your name':'Ваше имя','Your email':'Ваш email','Your message':'Ваше сообщение'}};
   el.placeholder=(lang==='en'?base:(placeholders[lang]&&placeholders[lang][base])||base);
  });
  buttons.forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
@@ -73,19 +86,19 @@ const status=document.getElementById('formStatus');
 form.addEventListener('submit',async e=>{
  e.preventDefault();
  status.className='form-status';
- status.textContent=document.documentElement.lang==='ru'?'Отправляем сообщение…':'Sending your message…';
+ status.textContent=document.documentElement.lang==='ru'?'Отправляем сообщение…':document.documentElement.lang==='zh'?'正在发送消息……':'Sending your message…';
  const data=new FormData(form);
  try{
   const response=await fetch('https://formsubmit.co/ajax/denis.tikhonov3001@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:data});
   const result=await response.json();
   if(response.ok){
    status.className='form-status success';
-   status.textContent=document.documentElement.lang==='ru'?'Спасибо! Сообщение отправлено.':'Thank you! Your message has been sent.';
+   status.textContent=document.documentElement.lang==='ru'?'Спасибо! Сообщение отправлено.':document.documentElement.lang==='zh'?'谢谢！消息已发送。':'Thank you! Your message has been sent.';
    form.reset();
   }else{throw new Error(result.message||'Submission failed')}
  }catch(err){
   status.className='form-status error';
-  status.textContent=document.documentElement.lang==='ru'?'Не удалось отправить сообщение. Попробуйте ещё раз.':'Could not send the message. Please try again.';
+  status.textContent=document.documentElement.lang==='ru'?'Не удалось отправить сообщение. Попробуйте ещё раз.':document.documentElement.lang==='zh'?'消息发送失败，请再试一次。':'Could not send the message. Please try again.';
  }
 });
 </script>
