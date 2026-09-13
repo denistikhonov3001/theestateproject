@@ -1,0 +1,26 @@
+name: site-audit
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static site audit
+        run: python qa/site_audit.py
+      - name: JavaScript syntax
+        run: |
+          node --check assets/translations-v86.js
+          node --check assets/site-v86.js
+          node --check assets/info-v86.js
