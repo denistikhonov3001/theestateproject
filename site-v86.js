@@ -26,7 +26,36 @@ function setExpanded(open){document.querySelectorAll('.lang-btn').forEach(b=>b.s
 function focusables(root){return [...root.querySelectorAll('a[href],button:not([disabled]),select:not([disabled]),textarea:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hasAttribute('inert')&&el.offsetParent!==null)}
 function openSheet(e){sheetOpener=e&&e.currentTarget?e.currentTarget:document.activeElement;const sh=document.getElementById('languageSheet');sh.removeAttribute('inert');sh.classList.add('open');sh.setAttribute('aria-hidden','false');setExpanded(true);document.body.classList.add('sheet-open');requestAnimationFrame(()=>sh.querySelector('.lang-option.active,.lang-option')?.focus())}
 function closeSheet(restoreFocus=true){const sh=document.getElementById('languageSheet');sh.classList.remove('open');sh.setAttribute('aria-hidden','true');sh.setAttribute('inert','');setExpanded(false);document.body.classList.remove('sheet-open');if(restoreFocus&&sheetOpener&&document.contains(sheetOpener))sheetOpener.focus()}
+function repairTitanicArchiveSources(){
+  if(document.body.dataset.route!=='ship')return;
+  const fixes=[
+    {
+      match:'Olympic_%26_Titanic_Grand_Staircase.jpg',
+      src:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Olympic_%26_Titanic_Grand_Staircase.jpg/1280px-Olympic_%26_Titanic_Grand_Staircase.jpg',
+      srcset:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Olympic_%26_Titanic_Grand_Staircase.jpg/960px-Olympic_%26_Titanic_Grand_Staircase.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Olympic_%26_Titanic_Grand_Staircase.jpg/1280px-Olympic_%26_Titanic_Grand_Staircase.jpg 1280w'
+    },
+    {
+      match:'Titanic_first_class_dinning_room.jpg',
+      src:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Titanic_first_class_dinning_room.jpg/1280px-Titanic_first_class_dinning_room.jpg',
+      srcset:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Titanic_first_class_dinning_room.jpg/960px-Titanic_first_class_dinning_room.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Titanic_first_class_dinning_room.jpg/1280px-Titanic_first_class_dinning_room.jpg 1280w'
+    },
+    {
+      match:'1st_Class_Cafe_Parisien_Completed.jpg',
+      src:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/1st_Class_Cafe_Parisien_Completed.jpg/1280px-1st_Class_Cafe_Parisien_Completed.jpg',
+      srcset:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/1st_Class_Cafe_Parisien_Completed.jpg/960px-1st_Class_Cafe_Parisien_Completed.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/1st_Class_Cafe_Parisien_Completed.jpg/1280px-1st_Class_Cafe_Parisien_Completed.jpg 1280w'
+    }
+  ];
+  document.querySelectorAll('img.remote-archive').forEach(img=>{
+    const current=img.getAttribute('src')||'';
+    const fix=fixes.find(f=>current.includes(f.match));
+    if(!fix)return;
+    img.setAttribute('src',fix.src);
+    img.setAttribute('srcset',fix.srcset);
+    img.classList.remove('is-broken');
+    img.removeAttribute('aria-hidden');
+  });
+}
 function bindRemote(){document.querySelectorAll('img.remote-img,img.remote-archive').forEach(img=>{img.addEventListener('error',()=>{img.classList.add('is-broken');img.setAttribute('aria-hidden','true')},{once:true})})}
-function init(){loadState();state.lang=detectLang();state.route=routeFromLocation();applyLang(state.lang,false);showRoute(state.route,false);bindRemote();const sh=document.getElementById('languageSheet');if(sh){sh.setAttribute('aria-hidden','true');sh.setAttribute('inert','');document.querySelector('.lang-btn')?.addEventListener('click',openSheet);document.querySelector('.close-btn')?.addEventListener('click',()=>closeSheet());sh.addEventListener('click',e=>{if(e.target===sh)closeSheet()});document.addEventListener('keydown',e=>{if(!sh.classList.contains('open'))return;if(e.key==='Escape'){e.preventDefault();closeSheet();return}if(e.key==='Tab'){const fs=focusables(sh);if(!fs.length)return;const first=fs[0],last=fs[fs.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});document.querySelectorAll('.lang-option').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.lang,true);closeSheet(true)}))}
+function init(){loadState();state.lang=detectLang();state.route=routeFromLocation();repairTitanicArchiveSources();applyLang(state.lang,false);showRoute(state.route,false);bindRemote();const sh=document.getElementById('languageSheet');if(sh){sh.setAttribute('aria-hidden','true');sh.setAttribute('inert','');document.querySelector('.lang-btn')?.addEventListener('click',openSheet);document.querySelector('.close-btn')?.addEventListener('click',()=>closeSheet());sh.addEventListener('click',e=>{if(e.target===sh)closeSheet()});document.addEventListener('keydown',e=>{if(!sh.classList.contains('open'))return;if(e.key==='Escape'){e.preventDefault();closeSheet();return}if(e.key==='Tab'){const fs=focusables(sh);if(!fs.length)return;const first=fs[0],last=fs[fs.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});document.querySelectorAll('.lang-option').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.lang,true);closeSheet(true)}))}
 document.querySelectorAll('[data-page]').forEach(a=>a.addEventListener('click',e=>{if(!isPreview())return;e.preventDefault();const r=a.dataset.page;if(!routes.includes(r))return;state.scroll[state.route]=safeNumber(scrollY);history.pushState(null,'','#'+r);showRoute(r,false);closeSheet(false)}));document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const h=a.getAttribute('href');if(['#home','#estate','#ship'].includes(h))return;let target;try{target=document.querySelector(h)}catch(err){return}if(target){e.preventDefault();target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}}));addEventListener('hashchange',()=>{if(!isPreview())return;const h=location.hash.replace('#','');if(routes.includes(h))showRoute(h,false)});const top=document.querySelectorAll('.back-top');top.forEach(b=>b.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})));const bar=document.querySelector('.progress');function onScroll(){state.scroll[state.route]=safeNumber(scrollY);const d=document.documentElement,den=d.scrollHeight-d.clientHeight;if(bar)bar.value=den?Math.min(100,Math.max(0,(d.scrollTop/den)*100)):0;top.forEach(b=>b.classList.toggle('show',d.scrollTop>650))}addEventListener('scroll',onScroll,{passive:true});addEventListener('pagehide',saveState);onScroll()}
 document.addEventListener('DOMContentLoaded',init);
