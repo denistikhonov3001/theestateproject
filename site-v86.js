@@ -55,7 +55,72 @@ function repairTitanicArchiveSources(){
     img.removeAttribute('aria-hidden');
   });
 }
+
+function enhanceTitanicProject(){
+  if(document.body.dataset.route!=='ship'||document.getElementById('titanic-framework'))return;
+  const route=document.querySelector('.route[data-route="ship"]')||document.querySelector('.route.active');
+  if(!route)return;
+  const block=document.createElement('div');
+  block.id='titanic-framework';
+  block.innerHTML=`
+    <section class="section titanic-framework-section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker" data-i18n="titanic_framework_k">Project framework</div><h2 class="serif" data-i18n="titanic_framework_h">From historical reference to a credible modern project.</h2></div>
+          <p data-i18n="titanic_framework_p">The concept is being developed in layers: visible historical character, modern technical requirements, documented sources and clearly defined questions for future specialists.</p>
+        </div>
+        <div class="titanic-framework-grid">
+          <article class="titanic-framework-card reveal"><span class="tf-index">01</span><h3 data-i18n="titanic_vision_h">Vision</h3><p data-i18n="titanic_vision_p">A full-size Titanic reconstruction concept that preserves a historically recognizable exterior and selected interiors while keeping modern technical systems visually separate where practical.</p></article>
+          <article class="titanic-framework-card reveal"><span class="tf-index">02</span><h3 data-i18n="titanic_history_h">Historical approach</h3><p data-i18n="titanic_history_p">Period photographs, plans and documented references guide visible proportions, finishes and spaces. Contemporary visualisations are identified as concept images rather than archival material.</p></article>
+          <article class="titanic-framework-card reveal"><span class="tf-index">03</span><h3 data-i18n="titanic_modern_h">Modern operation</h3><p data-i18n="titanic_modern_p">Any future operational vessel would need modern safety, navigation, accessibility, fire-protection, lifesaving and propulsion solutions developed by qualified specialists under applicable rules.</p></article>
+          <article class="titanic-framework-card reveal"><span class="tf-index">04</span><h3 data-i18n="titanic_status2_h">Current stage</h3><p data-i18n="titanic_status2_p">This is a public concept-development project. Detailed naval architecture and engineering have not been commissioned or completed, and shipbuilding has not started.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section alt titanic-study-section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker" data-i18n="titanic_study_k">Professional study</div><h2 class="serif" data-i18n="titanic_study_h">Questions that must be solved before physical development.</h2></div>
+          <p data-i18n="titanic_study_p">These areas are deliberately presented as open workstreams, not as solved engineering claims.</p>
+        </div>
+        <div class="titanic-study-grid">
+          <article class="study-card reveal"><h3 data-i18n="titanic_s1h">Hull, structure &amp; stability</h3><p data-i18n="titanic_s1p">Translate the historic external form into a safe modern structural and stability concept without pretending that the original design can simply be copied.</p></article>
+          <article class="study-card reveal"><h3 data-i18n="titanic_s2h">Propulsion &amp; power</h3><p data-i18n="titanic_s2p">Define a modern propulsion, electrical and machinery strategy that can support real operation while minimizing visual impact on historic spaces.</p></article>
+          <article class="study-card reveal"><h3 data-i18n="titanic_s3h">Safety &amp; evacuation</h3><p data-i18n="titanic_s3p">Develop lifesaving, evacuation, fire-protection and emergency systems around current requirements and realistic passenger operations.</p></article>
+          <article class="study-card reveal"><h3 data-i18n="titanic_s4h">Accessibility &amp; circulation</h3><p data-i18n="titanic_s4p">Resolve accessible routes, lifts, service circulation and modern guest needs while protecting the character of reconstructed public spaces.</p></article>
+          <article class="study-card reveal"><h3 data-i18n="titanic_s5h">Classification, flag &amp; approvals</h3><p data-i18n="titanic_s5p">Identify the regulatory, classification, flag-state and port requirements that would apply to the intended operating model.</p></article>
+          <article class="study-card reveal"><h3 data-i18n="titanic_s6h">Shipyard, cost &amp; operations</h3><p data-i18n="titanic_s6p">Assess build strategy, suitable shipyards, operating model, staffing, maintenance, lifecycle costs and the commercial assumptions needed for feasibility.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section titanic-gates-section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker" data-i18n="titanic_gates_k">Development gates</div><h2 class="serif" data-i18n="titanic_gates_h">A serious project advances by evidence, not by promises.</h2></div>
+        </div>
+        <div class="titanic-gates">
+          <article class="gate reveal"><span>01</span><div><h3 data-i18n="titanic_g1h">1 · Define the historical package</h3><p data-i18n="titanic_g1p">Fix the exterior language, priority interiors, source hierarchy and what will be reconstructed versus adapted.</p></div></article>
+          <article class="gate reveal"><span>02</span><div><h3 data-i18n="titanic_g2h">2 · Prepare the feasibility brief</h3><p data-i18n="titanic_g2p">Turn the visual concept into a structured brief of dimensions, functions, constraints, technical questions and intended operating use.</p></div></article>
+          <article class="gate reveal"><span>03</span><div><h3 data-i18n="titanic_g3h">3 · Specialist review</h3><p data-i18n="titanic_g3p">Naval architects, engineers, safety specialists and other qualified professionals test assumptions and identify conflicts.</p></div></article>
+          <article class="gate reveal"><span>04</span><div><h3 data-i18n="titanic_g4h">4 · Decide whether to advance</h3><p data-i18n="titanic_g4p">Only after feasibility evidence should the project move toward budgets, shipyard discussions, schedules, partnerships or physical development.</p></div></article>
+        </div>
+      </div>
+    </section>`;
+  const supportHeading=route.querySelector('[data-i18n="support_h"]');
+  const faqHeading=route.querySelector('[data-i18n="faq_h"]');
+  const anchor=(supportHeading&&supportHeading.closest('section'))||(faqHeading&&faqHeading.closest('section'));
+  if(anchor)anchor.before(block);else route.append(block);
+  const heroActions=route.querySelector('.hero-actions');
+  if(heroActions&&!heroActions.querySelector('[href="#titanic-framework"]')){
+    const a=document.createElement('a');
+    a.className='btn';
+    a.href='#titanic-framework';
+    a.innerHTML='<span data-i18n="titanic_framework_cta">Project framework</span><span>↓</span>';
+    heroActions.append(a);
+  }
+}
+
 function bindRemote(){document.querySelectorAll('img.remote-img,img.remote-archive').forEach(img=>{img.addEventListener('error',()=>{img.classList.add('is-broken');img.setAttribute('aria-hidden','true')},{once:true})})}
-function init(){loadState();state.lang=detectLang();state.route=routeFromLocation();repairTitanicArchiveSources();applyLang(state.lang,false);showRoute(state.route,false);bindRemote();const sh=document.getElementById('languageSheet');if(sh){sh.setAttribute('aria-hidden','true');sh.setAttribute('inert','');document.querySelector('.lang-btn')?.addEventListener('click',openSheet);document.querySelector('.close-btn')?.addEventListener('click',()=>closeSheet());sh.addEventListener('click',e=>{if(e.target===sh)closeSheet()});document.addEventListener('keydown',e=>{if(!sh.classList.contains('open'))return;if(e.key==='Escape'){e.preventDefault();closeSheet();return}if(e.key==='Tab'){const fs=focusables(sh);if(!fs.length)return;const first=fs[0],last=fs[fs.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});document.querySelectorAll('.lang-option').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.lang,true);closeSheet(true)}))}
+function init(){loadState();state.lang=detectLang();state.route=routeFromLocation();repairTitanicArchiveSources();enhanceTitanicProject();applyLang(state.lang,false);showRoute(state.route,false);bindRemote();const sh=document.getElementById('languageSheet');if(sh){sh.setAttribute('aria-hidden','true');sh.setAttribute('inert','');document.querySelector('.lang-btn')?.addEventListener('click',openSheet);document.querySelector('.close-btn')?.addEventListener('click',()=>closeSheet());sh.addEventListener('click',e=>{if(e.target===sh)closeSheet()});document.addEventListener('keydown',e=>{if(!sh.classList.contains('open'))return;if(e.key==='Escape'){e.preventDefault();closeSheet();return}if(e.key==='Tab'){const fs=focusables(sh);if(!fs.length)return;const first=fs[0],last=fs[fs.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});document.querySelectorAll('.lang-option').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.lang,true);closeSheet(true)}))}
 document.querySelectorAll('[data-page]').forEach(a=>a.addEventListener('click',e=>{if(!isPreview())return;e.preventDefault();const r=a.dataset.page;if(!routes.includes(r))return;state.scroll[state.route]=safeNumber(scrollY);history.pushState(null,'','#'+r);showRoute(r,false);closeSheet(false)}));document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const h=a.getAttribute('href');if(['#home','#estate','#ship'].includes(h))return;let target;try{target=document.querySelector(h)}catch(err){return}if(target){e.preventDefault();target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}}));addEventListener('hashchange',()=>{if(!isPreview())return;const h=location.hash.replace('#','');if(routes.includes(h))showRoute(h,false)});const top=document.querySelectorAll('.back-top');top.forEach(b=>b.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})));const bar=document.querySelector('.progress');function onScroll(){state.scroll[state.route]=safeNumber(scrollY);const d=document.documentElement,den=d.scrollHeight-d.clientHeight;if(bar)bar.value=den?Math.min(100,Math.max(0,(d.scrollTop/den)*100)):0;top.forEach(b=>b.classList.toggle('show',d.scrollTop>650))}addEventListener('scroll',onScroll,{passive:true});addEventListener('pagehide',saveState);onScroll()}
 document.addEventListener('DOMContentLoaded',init);
