@@ -176,7 +176,7 @@ if translations.get("en"):
 required = [
     "CNAME", ".nojekyll", "robots.txt", "sitemap.xml", ".well-known/security.txt", "security.txt",
     "BingSiteAuth.xml", "google109133360c700689.html",
-    "index.html", "estate.html", "titanic.html", "research.html", "get-involved.html",
+    "index.html", "estate.html", "titanic.html", "research.html", "research-grand-staircase.html", "get-involved.html",
     "titanic-operating-concepts.html", "media.html", "support.html", "support-policy.html",
     "refund-policy.html", "contact.html", "status.html", "updates.html", "terms.html",
     "privacy.html", "security.html", "credits.html", "thank-you.html", "payment-failed.html", "404.html"
