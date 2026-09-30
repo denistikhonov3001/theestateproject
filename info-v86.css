@@ -4,3 +4,8 @@
 
 /* External voluntary-support providers */
 .donation-section{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:36px;align-items:center;margin-top:42px;padding:30px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012))}.donation-copy{padding:8px 0}.donation-copy h2{font-size:clamp(30px,4vw,44px);margin:9px 0 14px}.donation-copy p{color:var(--muted);max-width:620px}.provider-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.provider-btn{white-space:nowrap;font-size:12px;padding:13px 18px}@media(max-width:780px){.donation-section{grid-template-columns:1fr;padding:22px}.provider-actions{justify-content:flex-start}}
+
+/* accessibility focus */
+:focus-visible{outline:3px solid var(--gold2);outline-offset:4px;border-radius:6px}
+a:focus-visible,button:focus-visible{box-shadow:0 0 0 2px var(--bg),0 0 0 5px var(--gold2)}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
