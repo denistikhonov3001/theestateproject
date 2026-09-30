@@ -51,3 +51,9 @@ Development log: https://theestateproject.com/updates.html
 X: https://x.com/TheEstateProjec
 
 Contact: theestateproject2@gmail.com
+
+## Site quality
+
+The repository includes automated GitHub Actions checks for local-link integrity, canonical metadata, language consistency, translation parity, basic security guardrails, JavaScript syntax and accessibility focus styling. The workflow also regenerates `sitemap.xml` from canonical indexable pages and commits meaningful `lastmod` dates derived from Git history.
+
+Security contact: https://theestateproject.com/.well-known/security.txt
