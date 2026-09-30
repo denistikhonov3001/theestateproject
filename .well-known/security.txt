@@ -1,0 +1,6 @@
+Contact: mailto:theestateproject2@gmail.com
+Preferred-Languages: en, ru
+Policy: https://theestateproject.com/security.html
+Canonical: https://theestateproject.com/.well-known/security.txt
+Canonical: https://theestateproject.com/security.txt
+Expires: 2027-09-13T00:00:00Z
