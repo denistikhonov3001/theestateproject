@@ -9,3 +9,9 @@
 :focus-visible{outline:3px solid var(--gold2);outline-offset:4px;border-radius:6px}
 a:focus-visible,button:focus-visible{box-shadow:0 0 0 2px var(--bg),0 0 0 5px var(--gold2)}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* research visuals */
+.research-visual{margin-top:36px;padding:14px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.02)}
+.research-visual img{display:block;width:100%;height:auto;border-radius:14px;background:#0b1118}
+.research-visual .meta{margin:12px 4px 2px}
+.doc ol{padding-left:22px}.doc ol li{margin:.45em 0}
