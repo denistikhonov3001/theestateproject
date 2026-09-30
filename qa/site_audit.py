@@ -78,6 +78,11 @@ for f in html_files:
     if len(parser.ids) != len(set(parser.ids)):
         errors.append(f"{f.name}: duplicate id values")
 
+    for forbidden in {"iframe", "object", "embed", "form"}:
+        checks += 1
+        if forbidden in parser.tags:
+            errors.append(f"{f.name}: forbidden <{forbidden}> element")
+
     for href, attrs in parser.links:
         checks += 1
         if href.startswith("http://"):
@@ -110,6 +115,10 @@ for f in html_files:
         checks += 1
         if not parser.canonicals:
             errors.append(f"{f.name}: indexable page is missing a canonical URL")
+        checks += 1
+        csp = [m for m in parser.metas if str(m.get("http-equiv", "")).lower() == "content-security-policy"]
+        if not csp:
+            errors.append(f"{f.name}: indexable page is missing Content-Security-Policy metadata")
 
     policy_langs = set(parser.policy_blocks)
     if policy_langs:
