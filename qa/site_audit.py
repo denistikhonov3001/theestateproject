@@ -174,7 +174,7 @@ if translations.get("en"):
             errors.append(f"translations-v86.js: {lang} key mismatch; missing={missing}, extra={extra}")
 
 required = [
-    "CNAME", "robots.txt", "sitemap.xml", ".well-known/security.txt", "security.txt",
+    "CNAME", ".nojekyll", "robots.txt", "sitemap.xml", ".well-known/security.txt", "security.txt",
     "BingSiteAuth.xml", "google109133360c700689.html",
     "index.html", "estate.html", "titanic.html", "research.html", "get-involved.html",
     "titanic-operating-concepts.html", "media.html", "support.html", "support-policy.html",
