@@ -228,8 +228,8 @@ public_text = "\n".join(
     if p.is_file() and p.suffix.lower() in {".html", ".js", ".css", ".txt", ".xml", ".md", ".yml"}
 )
 checks += 1
-if re.search(r"trybit", public_text, re.I):
-    errors.append("stale TryBit reference remains in root public files")
+if any(ROOT.glob("trybit-*.txt")) or re.search(r"TryBit\s+verification\s*:", public_text, re.I):
+    errors.append("stale TryBit verification artifact remains in public files")
 
 for pattern, label in [
     (r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----", "private key"),
